@@ -10,7 +10,11 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return response()->json(User::find(request('user'))->tasks);
+        if(request('user')!= null){
+            return response()->json(User::find(request('user'))->tasks);
+        } else {
+            return response()->json(['message' => 'No user specified'], 400);
+        }
     }
 
     public function show(Task $task)
