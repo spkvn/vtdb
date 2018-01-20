@@ -34,4 +34,10 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    //relationships
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
