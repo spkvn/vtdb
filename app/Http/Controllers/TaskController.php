@@ -4,12 +4,13 @@ namespace ToDo\Http\Controllers;
 
 use Illuminate\Http\Request;
 use ToDo\Task;
+use ToDo\User;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        return Task::all();
+        return response()->json(User::find(request('user'))->tasks);
     }
 
     public function show(Task $task)
