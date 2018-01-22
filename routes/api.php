@@ -23,5 +23,6 @@ Route::post('logout', 'Auth\LoginController@logout');
 
 Route::group(['middleware' => 'auth:api'],function(){
     Route::resource("tasks", "TaskController");
+    Route::post("tasks/entries", "TaskController@entries");
 });
 

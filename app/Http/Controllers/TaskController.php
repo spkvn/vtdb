@@ -33,6 +33,12 @@ class TaskController extends Controller
         return $task;
     }
 
+    public function entries()
+    {
+        $task = Task::find(request('task_id'));
+        return response()->json($task->timeEntries);
+    }
+
     public function delete(Task $task)
     {
         $task->delete();
