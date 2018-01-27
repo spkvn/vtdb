@@ -2,9 +2,13 @@
 
 namespace ToDo\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use ToDo\Services\TaskService;
 use ToDo\Task;
+use ToDo\TimeEntry;
 use ToDo\User;
+use function var_dump;
 
 class TaskController extends Controller
 {
@@ -36,12 +40,24 @@ class TaskController extends Controller
     public function entries()
     {
         $task = Task::find(request('task_id'));
-        return response()->json($task->timeEntries);
+        return response()->json($task->timeEntries->sortByDesc('created_at'));
     }
 
     public function delete(Task $task)
     {
         $task->delete();
         return 204;
+    }
+
+    public function createEntry()
+    {
+        TaskService::stopRunningEntries(request('task_id'));
+
+        $timeEntry = TimeEntry::create([
+            'started' => request('startTime'),
+            'task_id' => request('task_id')
+        ]);
+
+        return response()->json($timeEntry);
     }
 }

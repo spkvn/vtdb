@@ -16,4 +16,9 @@ class Task extends Model
     {
         return $this->hasMany(TimeEntry::class);
     }
+
+    public function runningEntries()
+    {
+        return $this->timeEntries()->whereNull('stopped');
+    }
 }
